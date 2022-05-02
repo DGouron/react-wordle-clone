@@ -1,6 +1,10 @@
 import { styled } from "@stitches/react";
 import * as React from "react";
 
+interface ILetter {
+  word: string;
+}
+
 const StyledLetter = styled("div", {
   fontWeight: "bold",
   fontFamily: "Arial",
@@ -8,8 +12,8 @@ const StyledLetter = styled("div", {
   textTransform: "uppercase",
 });
 
-function Letter() {
-  return <StyledLetter>L</StyledLetter>;
+function Letter(props: ILetter) {
+  return <StyledLetter>{props.word}</StyledLetter>;
 }
 
 export default Letter;

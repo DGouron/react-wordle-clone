@@ -1,6 +1,7 @@
 import { styled } from "@stitches/react";
 import React from "react";
 import Grid from "./components/Grid";
+import { WordleContext } from "./context/wordleContext";
 
 const Container = styled("div", {
   height: "100vh",
@@ -12,10 +13,19 @@ const Container = styled("div", {
 });
 
 function App() {
+  const [word, setWord] = React.useState("");
+
   return (
-    <Container>
-      <Grid />
-    </Container>
+    <WordleContext.Provider value={{ word }}>
+      <Container>
+        <Grid />
+        <input
+          type="text"
+          maxLength={5}
+          onChange={(e) => setWord(e.currentTarget.value)}
+        />
+      </Container>
+    </WordleContext.Provider>
   );
 }
 

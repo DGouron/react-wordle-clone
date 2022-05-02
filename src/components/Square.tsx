@@ -1,6 +1,11 @@
 import { styled } from "@stitches/react";
 import * as React from "react";
+import { bounce } from "../style/animations";
 import Letter from "./Letter";
+
+interface ILetter {
+  word: string;
+}
 
 const StyledSquare = styled("div", {
   flex: 1,
@@ -8,14 +13,25 @@ const StyledSquare = styled("div", {
   alignItems: "center",
   justifyContent: "center",
   outline: "2px solid #d3d6da",
+  transition: "0.25s outline",
+  variants: {
+    isActive: {
+      true: {
+        outline: "2px solid #878a8c",
+        animation: `${bounce} 200ms ease`,
+      },
+    },
+  },
 });
 
-function Square() {
+function Square(props: ILetter) {
   return (
-    <StyledSquare>
-      <Letter />
+    <StyledSquare isActive={!!props.word}>
+      <Letter word={props.word} />
     </StyledSquare>
   );
 }
 
 export default Square;
+
+//
