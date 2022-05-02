@@ -12,18 +12,35 @@ const Container = styled("div", {
   flexDirection: "column",
 });
 
+const wordReducer = (prevWord: string, key: string) => {
+  switch (key) {
+    case "Backspace":
+      return prevWord.slice(0, -1);
+    default:
+      const newWord = `${prevWord}${key}`;
+      const isWordLengthOk = newWord.length < 6;
+      if (isWordLengthOk) {
+        return newWord;
+      }
+      return prevWord;
+  }
+};
+
 function App() {
-  const [word, setWord] = React.useState("");
+  const [word, setWord] = React.useReducer(wordReducer, "");
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => setWord(event.key);
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <WordleContext.Provider value={{ word }}>
       <Container>
         <Grid />
-        <input
-          type="text"
-          maxLength={5}
-          onChange={(e) => setWord(e.currentTarget.value)}
-        />
       </Container>
     </WordleContext.Provider>
   );
